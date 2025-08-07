@@ -1,0 +1,475 @@
+definitions:
+  dao.CommentVo:
+    properties:
+      commentId:
+        type: integer
+      content:
+        type: string
+      createdAt:
+        type: string
+    type: object
+  dao.DPostVo:
+    properties:
+      content:
+        type: string
+      createdAt:
+        type: string
+      email:
+        type: string
+      postId:
+        type: integer
+      title:
+        type: string
+      updatedAt:
+        type: string
+      userId:
+        type: integer
+      username:
+        type: string
+    type: object
+  dao.PostVo:
+    properties:
+      content:
+        type: string
+      createdAt:
+        type: string
+      postId:
+        type: integer
+      title:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  instance.ErrorResponse:
+    properties:
+      code:
+        description: 状态码
+        example: 500
+        type: integer
+      error:
+        type: string
+      message:
+        description: 消息
+        example: Internal Server Error
+        type: string
+    type: object
+  instance.FailedResponse:
+    properties:
+      code:
+        description: 状态码
+        example: 400
+        type: integer
+      message:
+        description: 消息
+        example: 失败
+        type: string
+    type: object
+  instance.SuccessResponse:
+    properties:
+      code:
+        description: 状态码
+        example: 200
+        type: integer
+      data: {}
+      message:
+        description: 消息
+        example: 成功
+        type: string
+    type: object
+  instance.UnauthorizedResponse:
+    properties:
+      code:
+        description: 状态码
+        example: 401
+        type: integer
+      message:
+        description: 消息
+        example: 权限不足
+        type: string
+    type: object
+  service.CommentDTO:
+    properties:
+      content:
+        type: string
+      postID:
+        type: integer
+    required:
+    - content
+    - postID
+    type: object
+  service.PostDTO:
+    properties:
+      content:
+        type: string
+      title:
+        type: string
+    required:
+    - content
+    - title
+    type: object
+  service.UPostDTO:
+    properties:
+      content:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+    required:
+    - content
+    - id
+    - title
+    type: object
+info:
+  contact: {}
+  description: 个人博客系统 API 文档
+  title: Gin Web API
+  version: "1.0"
+paths:
+  /auth/commentList:
+    get:
+      consumes:
+      - text/plain
+      description: 所有评论列表
+      parameters:
+      - default: "10"
+        description: 文章ID
+        in: query
+        name: postId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/instance.SuccessResponse'
+            - properties:
+                dao:
+                  $ref: '#/definitions/dao.CommentVo'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/instance.FailedResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/instance.UnauthorizedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/instance.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: 所有评论列表
+      tags:
+      - 评论管理
+  /auth/createComment:
+    post:
+      consumes:
+      - application/json
+      description: 发表评论
+      parameters:
+      - description: 请求体
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/service.CommentDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/instance.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/instance.FailedResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/instance.UnauthorizedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/instance.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: 发表评论
+      tags:
+      - 评论管理
+  /auth/createPost:
+    post:
+      consumes:
+      - application/json
+      description: 发表文章
+      parameters:
+      - description: 请求体
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/service.PostDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/instance.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/instance.FailedResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/instance.UnauthorizedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/instance.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: 发表文章
+      tags:
+      - 文章管理
+  /auth/deletePost:
+    post:
+      consumes:
+      - text/plain
+      description: 删除文章
+      parameters:
+      - default: "10"
+        description: 请求体
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/instance.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/instance.FailedResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/instance.UnauthorizedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/instance.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: 删除文章
+      tags:
+      - 文章管理
+  /auth/detailPost:
+    post:
+      consumes:
+      - text/plain
+      description: 查询文章详情
+      parameters:
+      - default: "10"
+        description: 请求体
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/instance.SuccessResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/dao.DPostVo'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/instance.FailedResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/instance.UnauthorizedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/instance.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: 查询文章详情
+      tags:
+      - 文章管理
+  /auth/postList:
+    get:
+      consumes:
+      - text/plain
+      description: 查询文章列表
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/instance.SuccessResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/dao.PostVo'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/instance.FailedResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/instance.UnauthorizedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/instance.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: 查询文章列表
+      tags:
+      - 文章管理
+  /auth/updatePost:
+    post:
+      consumes:
+      - application/json
+      description: 修改文章
+      parameters:
+      - description: 请求体
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/service.UPostDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/instance.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/instance.FailedResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/instance.UnauthorizedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/instance.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: 修改文章
+      tags:
+      - 文章管理
+  /public/login:
+    post:
+      consumes:
+      - multipart/form-data
+      description: 用户登录
+      parameters:
+      - default: admin
+        description: 用户名
+        in: formData
+        name: username
+        required: true
+        type: string
+      - default: "123456"
+        description: 密码
+        in: formData
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/instance.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/instance.FailedResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/instance.UnauthorizedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/instance.ErrorResponse'
+      summary: 用户登录
+      tags:
+      - 公开API
+  /public/register:
+    post:
+      consumes:
+      - multipart/form-data
+      description: 注册新用户
+      parameters:
+      - default: admin
+        description: 用户名
+        in: formData
+        name: username
+        required: true
+        type: string
+      - default: "123456"
+        description: 密码
+        in: formData
+        name: password
+        required: true
+        type: string
+      - default: 119@qq.com
+        description: 邮箱
+        in: formData
+        name: email
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/instance.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/instance.FailedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/instance.ErrorResponse'
+      summary: 注册新用户
+      tags:
+      - 公开API
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

@@ -1,0 +1,351 @@
+{
+	"info": {
+		"_postman_id": "3d0b02e5-6da4-47cd-ae91-2c9a3652429b",
+		"name": "博客系统API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47281790",
+		"_collection_link": "https://kedu45918-6335927.postman.co/workspace/ke-du's-Workspace~d61ad1ef-10cd-4787-8c39-d2eb76677bd4/collection/47281790-3d0b02e5-6da4-47cd-ae91-2c9a3652429b?action=share&source=collection_link&creator=47281790"
+	},
+	"item": [
+		{
+			"name": "注册",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123567",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "1111@163.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:9001/public/register",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"public",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "登录",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "1111@163.com",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:9001/public/login",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"public",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "创建文章",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTQ2NTkwMjMsImlkIjoxMCwidXNlcm5hbWUiOiJhZG1pbiJ9.77Ux79gGDs7Fjtxt2J4og91rL-gz_9GbGRUmsFwU1n0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\":\"今日天气\",\r\n    \"content\":\"今日高温39°，中雨转多云\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9001/auth/createPost",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"auth",
+						"createPost"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "更新文章",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTQ2NTkwMjMsImlkIjoxMCwidXNlcm5hbWUiOiJhZG1pbiJ9.77Ux79gGDs7Fjtxt2J4og91rL-gz_9GbGRUmsFwU1n0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\":\"今日天气123\",\r\n    \"content\":\"今日高温39°，中雨转多云是真的\",\r\n    \"id\": 13\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9001/auth/updatePost",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"auth",
+						"updatePost"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "文章详情",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTQ2NTkwMjMsImlkIjoxMCwidXNlcm5hbWUiOiJhZG1pbiJ9.77Ux79gGDs7Fjtxt2J4og91rL-gz_9GbGRUmsFwU1n0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:9001/auth/detailPost?id=13",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"auth",
+						"detailPost"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "13"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "删除文章",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTQ2NTkwMjMsImlkIjoxMCwidXNlcm5hbWUiOiJhZG1pbiJ9.77Ux79gGDs7Fjtxt2J4og91rL-gz_9GbGRUmsFwU1n0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:9001/auth/deletePost?id=13",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"auth",
+						"deletePost"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "13"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取文章列表",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTQ2NTkwMjMsImlkIjoxMCwidXNlcm5hbWUiOiJhZG1pbiJ9.77Ux79gGDs7Fjtxt2J4og91rL-gz_9GbGRUmsFwU1n0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9001/auth/postList",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"auth",
+						"postList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "发表评论",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTQ2NTkwMjMsImlkIjoxMCwidXNlcm5hbWUiOiJhZG1pbiJ9.77Ux79gGDs7Fjtxt2J4og91rL-gz_9GbGRUmsFwU1n0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"content\":\"楼主牛逼，楼主好人一生平安\",\r\n    \"postID\": 11\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9001/auth/createComment",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"auth",
+						"createComment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取文章的所有评论",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTQ2NTkwMjMsImlkIjoxMCwidXNlcm5hbWUiOiJhZG1pbiJ9.77Ux79gGDs7Fjtxt2J4og91rL-gz_9GbGRUmsFwU1n0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:9001/auth/commentList?postId=11",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"auth",
+						"commentList"
+					],
+					"query": [
+						{
+							"key": "postId",
+							"value": "11"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
