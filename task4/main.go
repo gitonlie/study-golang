@@ -11,7 +11,6 @@ import (
 	"task4/common"
 	"task4/control"
 	_ "task4/docs"
-	"time"
 )
 
 // 初始化Swagger配置
@@ -37,7 +36,7 @@ func main() {
 	router.Use(gin.LoggerWithFormatter(func(param gin.LogFormatterParams) string {
 		return fmt.Sprintf("%s - [%s] \"%s %s %s %d %s \"%s\" %s\"\n",
 			param.ClientIP,
-			param.TimeStamp.Format(time.RFC1123),
+			param.TimeStamp.Format("2006-01-02 15:04:05.000"),
 			param.Method,
 			param.Path,
 			param.Request.Proto,

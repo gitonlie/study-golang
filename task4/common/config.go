@@ -37,9 +37,7 @@ func JWTAuth() gin.HandlerFunc {
 		// 获取请求头中的 Authorization 字段
 		authHeader := c.GetHeader("Authorization")
 		if authHeader == "" {
-			c.JSON(http.StatusUnauthorized, Unauthorized("authorization header required"))
-			c.Abort()
-			return
+			panic(Unauthorized("authorization header required"))
 		}
 
 		tokenString := strings.TrimPrefix(c.GetHeader("Authorization"), "Bearer ")
@@ -53,9 +51,7 @@ func JWTAuth() gin.HandlerFunc {
 		})
 
 		if err != nil {
-			c.JSON(http.StatusUnauthorized, Unauthorized(err.Error()))
-			c.Abort()
-			return
+			panic(Unauthorized(err.Error()))
 		}
 
 		// ExtractClaims 提取 JWT 声明信息
@@ -66,9 +62,7 @@ func JWTAuth() gin.HandlerFunc {
 			}
 			c.Set("USER_REAL", userReal)
 		} else {
-			c.JSON(http.StatusUnauthorized, Unauthorized("invalid token"))
-			c.Abort()
-			return
+			panic(Unauthorized("invalid token"))
 		}
 		c.Next()
 	}
